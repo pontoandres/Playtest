@@ -67,3 +67,47 @@ nav {
     float: right;
     margin-top: 10px;
 }
+
+/* Estilos para el botón desplegable */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 12px 16px;
+}
+
+.dropdown-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-content form label,
+.dropdown-content form input,
+.dropdown-content form button {
+    margin-bottom: 10px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}

@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PlayTest{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/scripts.js' %}" defer></script>
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/logoPlayTest.webp' %}" alt="Logo PlayTest">
+        <h1>PlayTest</h1>
+
+        <!-- Opciones de usuario: login y logout -->
+        <nav>
+            {% if not user.is_authenticated %}
+                <!-- Botón para iniciar sesión -->
+                <div class="dropdown">
+                    <button class="dropbtn">Iniciar Sesión</button>
+                    <div class="dropdown-content">
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <label for="id_username">Nombre de usuario:</label>
+                            <input type="text" name="username" id="id_username" required>
+                            <label for="id_password">Contraseña:</label>
+                            <input type="password" name="password" id="id_password" required>
+                            <button type="submit">Iniciar Sesión</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Botón para registro -->
+                <a href="{% url 'register' %}" class="btn-register">Regístrate</a>
+            {% else %}
+                <!-- Botón para cerrar sesión -->
+                <a href="{% url 'logout' %}" class="btn-logout">Cerrar sesión</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        &copy; 2024 PlayTest. Todos los derechos reservados.
+    </footer>
+</body>
+</html>
