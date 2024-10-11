@@ -1,0 +1,13 @@
+<!-- templates/game_list.html -->
+<h1>Juegos Disponibles</h1>
+<ul>
+    {% for game in games %}
+        <li>{{ game.title }}
+            {% if user.is_authenticated and user.groups.filter(name="Testers").exists %}
+                <a href="{% url 'download_game' game.id %}">Descargar</a>
+            {% else %}
+                <span>Inicia sesión para descargar</span>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

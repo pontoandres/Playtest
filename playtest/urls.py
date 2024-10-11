@@ -4,8 +4,10 @@ from myapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.HomeView.as_view(), name='home'),
     path('register/', views.RegisterView.as_view(), name='register'),
-    path('tester/home/', views.TesterHomeView.as_view(), name='tester_home'),
-    path('developer/home/', views.DeveloperHomeView.as_view(), name='developer_home'),
+    path('tester/home/', views.TesterHomeView.as_view(), name='tester_home'), # Página de inicio para testers
+    path('developer/home/', views.DeveloperHomeView.as_view(), name='developer_home'),# Página de inicio para Devs
+    path('developer/upload/', views.UploadGameView.as_view(), name='upload_game'), # Página de subida de juegos
+    path('', views.GameListView.as_view(), name='game_list'),  # Página de lista de juegos y HOME PAGE
+    #path('developer/upload/', UploadGameView.as_view(), name='upload_game'),
 ]
