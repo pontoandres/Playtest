@@ -9,5 +9,6 @@ urlpatterns = [
     path('developer/home/', views.DeveloperHomeView.as_view(), name='developer_home'),# Página de inicio para Devs
     path('developer/upload/', views.UploadGameView.as_view(), name='upload_game'), # Página de subida de juegos
     path('', views.GameListView.as_view(), name='game_list'),  # Página de lista de juegos y HOME PAGE
-    #path('developer/upload/', UploadGameView.as_view(), name='upload_game'),
+    path('accounts/', include('django.contrib.auth.urls')),  
+
 ]
