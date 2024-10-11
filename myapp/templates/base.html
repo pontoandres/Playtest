@@ -36,10 +36,22 @@
                 {% endif %}
             {% else %}
                 <!-- Botón para cerrar sesión -->
-                <a href="{% url 'logout' %}" class="btn-logout">Cerrar sesión</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-logout">Cerrar sesión</button>
+                </form>
             {% endif %}
         </nav>
     </header>
+
+    <!-- Mostrar mensajes -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
     <main>
         {% block content %}

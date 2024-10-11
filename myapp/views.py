@@ -9,12 +9,29 @@ from .forms import CustomUserCreationForm
 from django.views.generic import ListView
 from .models import Game
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.views import LogoutView
   
 
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'register.html'
     success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        user = form.save()
+        # Asignar el grupo "Testers" al usuario
+        try:
+            group = Group.objects.get(name='Testers')
+            user.groups.add(group)
+        except Group.DoesNotExist:
+            messages.error(self.request, 'El grupo "Testers" no existe.')
+            return redirect('register')
+        
+        # Agregar mensaje de éxito
+        messages.success(self.request, 'Registro exitoso. Bienvenido a PlayTest!')
+        
+        return response
 
 class GameListView(ListView):
     model = Game
@@ -59,3 +76,6 @@ class DeveloperHomeView(UserPassesTestMixin, View):
     def get(self, request):
         # Respuesta para los usuarios que tienen permiso (developers)
         return HttpResponse("Bienvenido Developer")
+    
+class CustomLogoutView(LogoutView):
+    next_page = reverse_lazy('game_list')

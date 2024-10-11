@@ -130,3 +130,9 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirigir a la página de lista de juegos después de iniciar sesión
+LOGIN_REDIRECT_URL = '/'
+
+# Redirigir a la página de inicio después de cerrar sesión
+LOGOUT_REDIRECT_URL = '/'

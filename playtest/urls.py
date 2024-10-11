@@ -10,5 +10,6 @@ urlpatterns = [
     path('developer/upload/', views.UploadGameView.as_view(), name='upload_game'), # Página de subida de juegos
     path('', views.GameListView.as_view(), name='game_list'),  # Página de lista de juegos y HOME PAGE
     path('accounts/', include('django.contrib.auth.urls')),  
+    path('accounts/logout/', views.CustomLogoutView.as_view(), name='logout'),
 
 ]
