@@ -1,13 +1,49 @@
 <!-- templates/game_list.html -->
-<h1>Juegos Disponibles</h1>
-<ul>
-    {% for game in games %}
-        <li>{{ game.title }}
-            {% if user.is_authenticated and user.groups.filter(name="Testers").exists %}
-                <a href="{% url 'download_game' game.id %}">Descargar</a>
-            {% else %}
-                <span>Inicia sesión para descargar</span>
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
+{% load static %}
+{% load custom_tags %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayTest - Juegos Disponibles</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <!-- Header con el logo y el nombre de la página -->
+    <header>
+        <img src="{% static 'logoPlayTest.webp' %}" alt="Logo PlayTest">
+        <h1>PlayTest</h1>
+    </header>
+
+    <!-- Sección de bienvenida -->
+    <section class="welcome">
+        <h2>Bienvenido a PlayTest</h2>
+        <p>Explora los juegos en versión beta y acceso anticipado, deja tus comentarios y ayuda a los desarrolladores a mejorar sus proyectos.</p>
+    </section>
+
+    <!-- Lista de juegos disponibles -->
+    <div class="games-list">
+        <h1>Juegos Disponibles</h1>
+        <ul>
+            {% for game in games %}
+                <li>
+                    <span>{{ game.title }}</span>
+                    {% if user.is_authenticated and user|has_group:"Testers" %}
+                        <a href="{% url 'download_game' game.id %}">Descargar</a>
+                    {% else %}
+                        <span>Inicia sesión para descargar</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <footer>
+        &copy; 2024 PlayTest. Todos los derechos reservados.
+    </footer>
+
+</body>
+</html>
