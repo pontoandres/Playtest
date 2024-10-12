@@ -136,3 +136,6 @@ LOGIN_REDIRECT_URL = '/'
 
 # Redirigir a la página de inicio después de cerrar sesión
 LOGOUT_REDIRECT_URL = '/'
+
+# Configurar el modelo de usuario personalizado
+AUTH_USER_MODEL = 'myapp.CustomUser'

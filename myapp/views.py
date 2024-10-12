@@ -1,3 +1,4 @@
+from  django.contrib.auth.models import Group
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
@@ -10,16 +11,18 @@ from django.views.generic import ListView
 from .models import Game
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LogoutView
-  
+from django.contrib import messages
+from django.contrib.auth import login
 
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'register.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('game_list')  # Redirigir a la página de inicio después del registro
 
     def form_valid(self, form):
-        response = super().form_valid(form)
         user = form.save()
+        login(self.request, user)  # Iniciar sesión automáticamente después del registro
+        
         # Asignar el grupo "Testers" al usuario
         try:
             group = Group.objects.get(name='Testers')
@@ -30,8 +33,11 @@ class RegisterView(CreateView):
         
         # Agregar mensaje de éxito
         messages.success(self.request, 'Registro exitoso. Bienvenido a PlayTest!')
-        
-        return response
+        return redirect(self.success_url)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Error en el formulario. Por favor, corrige los errores.')
+        return self.render_to_response(self.get_context_data(form=form))
 
 class GameListView(ListView):
     model = Game
