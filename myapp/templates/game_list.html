@@ -22,12 +22,15 @@
         <ul>
             {% for game in games %}
                 <li>
-                    <span>{{ game.title }}</span>
-                    {% if user.is_authenticated and user|has_group:"Testers" %}
-                        <a href="{% url 'download_game' game.id %}">Descargar</a>
-                    {% else %}
-                        <span>Inicia sesión para descargar</span>
-                    {% endif %}
+                    <a href="{% url 'game_profile' game.id %}">
+                        {% if game.image %}
+                            <img src="{{ game.image.url }}" alt="{{ game.title }}" class="game-thumbnail">
+                        {% endif %}
+                        <div class="game-info">
+                            <h3>{{ game.title }}</h3>
+                            <p>{{ game.description }}</p>
+                        </div>
+                    </a>
                 </li>
             {% endfor %}
         </ul>

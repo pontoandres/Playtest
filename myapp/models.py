@@ -19,9 +19,10 @@ class CustomUser(AbstractUser):
 
 class Game(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField(blank=True)  # Añadir el campo description
+    description = models.TextField(blank=True)
     file = models.FileField(upload_to='games/', blank=True, null=True)
-    unity_play_url = models.URLField(blank=True, null=True)  # Añadir el campo unity_play_url
+    unity_play_url = models.URLField(blank=True, null=True)
+    image = models.ImageField(upload_to='game_images/', blank=True, null=True)  # Nuevo campo para la imagen
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):

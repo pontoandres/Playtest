@@ -30,4 +30,4 @@ class GameUploadForm(forms.ModelForm):
 
     class Meta:
         model = Game
-        fields = ['title', 'description', 'file', 'unity_play_url']
+        fields = ['title', 'description', 'file', 'unity_play_url', 'image']

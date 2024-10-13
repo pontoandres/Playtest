@@ -13,4 +13,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),  
     path('accounts/logout/', views.CustomLogoutView.as_view(), name='logout'),
     path('upload_game/', UploadGameView.as_view(), name='upload_game'), # Página de subida de juegos
+    path('game/<int:pk>/', views.GameProfileView.as_view(), name='game_profile'),  # Página de perfil de juego
+    path('game/<int:pk>/delete/', views.GameDeleteView.as_view(), name='game_delete'),  # Página de eliminación de juegos
+
 ]

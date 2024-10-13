@@ -7,13 +7,14 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm
-from django.views.generic import ListView
 from .models import Game
 from .forms import GameUploadForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LogoutView
 from django.contrib import messages
 from django.contrib.auth import login
+from django.views.generic import DetailView, ListView, DeleteView
+
 
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm
@@ -92,3 +93,17 @@ class DeveloperHomeView(UserPassesTestMixin, View):
     
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('game_list')
+
+class GameProfileView(DetailView):
+    model = Game
+    template_name = 'game_profile.html'
+    context_object_name = 'game'
+
+class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Game
+    template_name = 'game_confirm_delete.html'
+    success_url = reverse_lazy('game_list')
+
+    def test_func(self):
+        game = self.get_object()
+        return self.request.user == game.uploaded_by

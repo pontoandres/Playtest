@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ game.title }} - Perfil{% endblock %}
+
+{% block content %}
+    <div class="game-profile">
+        <h1>{{ game.title }}</h1>
+        {% if game.image %}
+            <img src="{{ game.image.url }}" alt="{{ game.title }}" class="game-image">
+        {% endif %}
+        <p>{{ game.description }}</p>
+        {% if user.is_authenticated and (user|has_group:"Testers" or user|has_group:"Developers") %}
+            {% if game.unity_play_url %}
+                <iframe src="{{ game.unity_play_url }}" frameborder="0" width="800" height="600"></iframe>
+            {% endif %}
+            {% if game.file %}
+                <a href="{{ game.file.url }}" download>Descargar Juego</a>
+            {% endif %}
+        {% else %}
+            <p>Inicia sesión como tester o desarrollador para jugar o descargar este juego.</p>
+        {% endif %}
+    </div>
+{% endblock %}
