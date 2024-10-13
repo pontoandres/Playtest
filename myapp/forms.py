@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
-from .models import CustomUser
+from .models import CustomUser, Game
 
 class CustomUserCreationForm(UserCreationForm):
     ROLE_CHOICES = (
@@ -24,3 +24,10 @@ class CustomUserCreationForm(UserCreationForm):
             elif role == 'developer':
                 user.groups.add(Group.objects.get(name='Developers'))
         return user
+
+class GameUploadForm(forms.ModelForm):
+    unity_play_url = forms.URLField(required=False, help_text="URL del juego en Unity Play")
+
+    class Meta:
+        model = Game
+        fields = ['title', 'description', 'file', 'unity_play_url']

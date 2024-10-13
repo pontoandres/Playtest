@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 from myapp import views
+from myapp.views import UploadGameView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,5 +12,5 @@ urlpatterns = [
     path('', views.GameListView.as_view(), name='game_list'),  # Página de lista de juegos y HOME PAGE
     path('accounts/', include('django.contrib.auth.urls')),  
     path('accounts/logout/', views.CustomLogoutView.as_view(), name='logout'),
-
+    path('upload_game/', UploadGameView.as_view(), name='upload_game'), # Página de subida de juegos
 ]

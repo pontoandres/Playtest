@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load custom_tags %}
 
+
 {% block title %}PlayTest - Juegos Disponibles{% endblock %}
 
 {% block content %}
@@ -9,6 +10,11 @@
         <h2>Bienvenido a PlayTest</h2>
         <p>Explora los juegos en versión beta y acceso anticipado, deja tus comentarios y ayuda a los desarrolladores a mejorar sus proyectos.</p>
     </section>
+
+    <!-- Botón para subir juegos (solo visible para desarrolladores) -->
+    {% if user.is_authenticated and user|has_group:"Developers" %}
+        <a href="{% url 'upload_game' %}" class="btn-upload-game">Subir Juego</a>
+    {% endif %}
 
     <!-- Lista de juegos disponibles -->
     <div class="games-list">

@@ -9,6 +9,7 @@ from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm
 from django.views.generic import ListView
 from .models import Game
+from .forms import GameUploadForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LogoutView
 from django.contrib import messages
@@ -50,12 +51,18 @@ class GameListView(ListView):
     
 class UploadGameView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Game
-    fields = ['title', 'file']
+    form_class = GameUploadForm
     template_name = 'upload_game.html'
-    success_url = '/'
+    success_url = reverse_lazy('game_list')
 
     def test_func(self):
         return self.request.user.groups.filter(name='Developers').exists()
+
+    def form_valid(self, form):
+        game = form.save(commit=False)
+        game.uploaded_by = self.request.user
+        game.save()
+        return super().form_valid(form)
 
 class TesterHomeView(UserPassesTestMixin, View):
     def test_func(self):

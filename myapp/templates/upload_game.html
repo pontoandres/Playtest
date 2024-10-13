@@ -1,7 +1,10 @@
-<!-- templates/upload_game.html -->
-<h1>Subir Juego</h1>
-<form method="post" enctype="multipart/form-data">
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Subir Juego</h2>
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Subir Juego</button>
-</form>
+    <button type="submit">Subir</button>
+  </form>
+{% endblock %}
