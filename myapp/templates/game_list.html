@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load custom_tags %}
 
-
 {% block title %}PlayTest - Juegos Disponibles{% endblock %}
 
 {% block content %}
@@ -31,6 +30,12 @@
                             <p>{{ game.description }}</p>
                         </div>
                     </a>
+                    {% if user.is_authenticated and user|has_group:"Developers" and game.uploaded_by == user %}
+                        <form action="{% url 'game_delete' game.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-delete-game">Eliminar Juego</button>
+                        </form>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>

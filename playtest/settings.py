@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -139,3 +140,9 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Configurar el modelo de usuario personalizado
 AUTH_USER_MODEL = 'myapp.CustomUser'
+
+# Ruta URL donde se servirán los archivos multimedia
+MEDIA_URL = '/media/'
+
+# Directorio donde se almacenarán los archivos subidos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
