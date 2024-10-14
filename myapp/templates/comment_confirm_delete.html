@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar Eliminación de Comentario{% endblock %}
+
+{% block content %}
+    <h1>Confirmar Eliminación de Comentario</h1>
+    <p>¿Estás seguro de que deseas eliminar este comentario?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar</button>
+        <a href="{% url 'game_profile' object.game.id %}">Cancelar</a>
+    </form>
+{% endblock %}

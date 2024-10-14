@@ -10,6 +10,7 @@
             <img src="{{ game.image.url }}" alt="{{ game.title }}" class="game-image">
         {% endif %}
         <p>{{ game.description }}</p>
+
         {% if user.is_authenticated and user|has_group:"Testers" %}
             {% if game.unity_play_url %}
                 <iframe src="{{ game.unity_play_url }}" frameborder="0" width="800" height="600"></iframe>
@@ -27,6 +28,35 @@
         {% else %}
             <p>Inicia sesión como tester o desarrollador para jugar o descargar este juego.</p>
         {% endif %}
+    </div>
 
+    <!-- Sección de comentarios -->
+    <div class="comments-section">
+        <h2>Comentarios</h2>
+        <ul id="comments-list">
+            {% for comment in game.comments.all %}
+                <li>
+                    <p>{{ comment.text }}</p>
+                    <p><small>Por {{ comment.author }} el {{ comment.created_at }}</small></p>
+                    {% if user.is_authenticated and user == comment.author %}
+                        <form action="{% url 'delete_comment' comment.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-delete-comment">Eliminar Comentario</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% if user.is_authenticated %}
+            <h3>Agregar un comentario</h3>
+            <form id="comment-form" method="post">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit">Agregar Comentario</button>
+            </form>
+        {% else %}
+            <p>Inicia sesión para agregar un comentario.</p>
+        {% endif %}
     </div>
 {% endblock %}

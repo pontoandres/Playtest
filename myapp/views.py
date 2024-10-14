@@ -3,17 +3,18 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from .forms import CustomUserCreationForm
-from .models import Game
+from .forms import CustomUserCreationForm, CommentForm
+from .models import Game, Comment
 from .forms import GameUploadForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LogoutView
 from django.contrib import messages
 from django.contrib.auth import login
-from django.views.generic import DetailView, ListView, DeleteView
+from django.views.generic import DetailView, ListView, DeleteView, CreateView
+from django.http import JsonResponse
 
 
 class RegisterView(CreateView):
@@ -99,6 +100,23 @@ class GameProfileView(DetailView):
     template_name = 'game_profile.html'
     context_object_name = 'game'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()  # Añadir el formulario al contexto
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.game = self.get_object()
+            comment.save()
+            return redirect('game_profile', pk=self.get_object().pk)  # Redirige a la misma página después de guardar
+        else:
+            # Si el formulario no es válido, volver a renderizar la página con errores
+            return self.get(request, *args, **kwargs)
+    
 class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Game
     template_name = 'game_confirm_delete.html'
@@ -107,3 +125,27 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         game = self.get_object()
         return self.request.user == game.uploaded_by
+    
+class AddCommentView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'add_comment.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.game = get_object_or_404(Game, pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('game_profile', kwargs={'pk': self.kwargs['pk']})
+
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = 'comment_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('game_profile', kwargs={'pk': self.object.game.pk})
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author

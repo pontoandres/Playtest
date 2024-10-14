@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
-from .models import CustomUser, Game
+from .models import CustomUser, Game, Comment
 
 class CustomUserCreationForm(UserCreationForm):
     ROLE_CHOICES = (
@@ -31,3 +31,8 @@ class GameUploadForm(forms.ModelForm):
     class Meta:
         model = Game
         fields = ['title', 'description', 'file', 'unity_play_url', 'image']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
