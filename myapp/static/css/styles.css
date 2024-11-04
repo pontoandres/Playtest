@@ -3,6 +3,8 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
 }
 
 header {
@@ -24,9 +26,44 @@ header h1 {
     margin: 0;
 }
 
-.welcome {
+.container {
+    max-width: 800px; /* Ajusta el ancho máximo del contenedor */
+    width: 100%; /* Asegura que el contenedor se expanda al 100% de su ancho disponible */
+    margin: 20px auto; /* Centra el contenedor */
+    padding: 20px;
     text-align: center;
-    padding: 40px 20px;
+}
+
+.hero, .about, .features, .offer, .join {
+    margin-bottom: 40px;
+}
+
+.btn-primary, .btn-secondary {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.levels {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.level {
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
 }
 
 .games-list {
@@ -46,7 +83,7 @@ footer {
     margin-top: 40px;
 }
 
-/* Estilos para los botones de login, logout y register*/
+/* Estilos para los botones de login, logout y register */
 .btn-login, .btn-register, .btn-logout {
     display: inline-block;
     padding: 10px 20px;
@@ -116,4 +153,42 @@ nav {
 
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
+}
+
+/* Estilos para el perfil de usuario */
+.profile-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-role {
+    background-color: #3498db;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.review-list {
+    margin-top: 20px;
+}
+
+.review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.review-item:last-child {
+    border-bottom: none;
 }

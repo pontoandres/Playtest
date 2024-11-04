@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}PlayTest - Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="hero">
+        <h2>PlayTest</h2>
+        <p>Free games. Free reviews.</p>
+        <a href="{% url 'game_list' %}" class="btn-primary">Play Now</a>
+    </section>
+
+    <section class="about">
+        <h3>Help indie developers thrive by testing their latest games.</h3>
+        <p>PlayTest connects passionate gamers with indie game developers, helping games improve through your feedback.</p>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <h4>Simple, Fun, and Rewarding</h4>
+            <p>Easily sign up, play new games, and give feedback. No hassle, just fun.</p>
+            <a href="{% url 'game_list' %}" class="btn-secondary">Discover new experiences</a>
+        </div>
+    </section>
+
+    <section class="offer">
+        <h3>What We Offer</h3>
+        <p>Access to a growing library of indie games in development, exclusive to PlayTest members.</p>
+        <p>Discounts, exclusive cosmetics... you just have to level up.</p>
+        <div class="levels">
+            <div class="level">C</div>
+            <div class="level">B</div>
+            <div class="level">A</div>
+            <div class="level">S</div>
+        </div>
+    </section>
+
+    <section class="join">
+        <h3>Be a Part of Indie Gaming Success</h3>
+        <p>Your reviews help developers refine their games, and you get early access to exciting new titles.</p>
+    </section>
+</div>
+{% endblock %}

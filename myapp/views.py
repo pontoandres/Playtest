@@ -7,7 +7,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm, CommentForm
-from .models import Game, Comment
+from .models import CustomUser, Game, Comment
 from .forms import GameUploadForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LogoutView
@@ -15,7 +15,11 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.views.generic import DetailView, ListView, DeleteView, CreateView
 from django.http import JsonResponse
+from django.views.generic import TemplateView
 
+
+class HomePageView(TemplateView):
+    template_name = 'home.html'
 
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm
@@ -50,6 +54,19 @@ class GameListView(ListView):
     def get_queryset(self):
         # Mostrar todos los juegos para todos los usuarios
         return Game.objects.all()
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = CustomUser
+    template_name = 'user_profile.html'
+    context_object_name = 'user_profile'
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_comments'] = Comment.objects.filter(author=self.request.user)
+        return context
     
 class UploadGameView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Game

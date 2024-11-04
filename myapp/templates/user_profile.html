@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <h2>{{ user_profile.username }}</h2>
+        <span class="user-role">{{ user_profile.groups.first.name }}</span>
+    </div>
+    <div class="profile-info">
+        <p><strong>Email:</strong> {{ user_profile.email }}</p>
+        <p><strong>Score:</strong> {{ user_profile.score }}</p>
+    </div>
+
+    <h3>Latest reviews from {{ user_profile.username }}</h3>
+    <div class="review-list">
+        {% for review in user_comments %}
+            <div class="review-item">
+                <h4>{{ review.text }}</h4>
+                <p><strong>Game:</strong> {{ review.game.title }}</p>
+                <p><small>Date: {{ review.created_at }}</small></p>
+            </div>
+        {% empty %}
+            <p>No reviews yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

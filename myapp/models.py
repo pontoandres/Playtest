@@ -3,6 +3,8 @@ from django.db import models
 from django.conf import settings
 
 class CustomUser(AbstractUser):
+    score = models.IntegerField(default=0)  # Campo de puntaje
+
     groups = models.ManyToManyField(
         Group,
         related_name='customuser_groups',  
@@ -17,17 +19,25 @@ class CustomUser(AbstractUser):
         verbose_name='user permissions',
     )
 
+    def calculate_score(self):
+        # Lógica para calcular el puntaje basado en el número y calidad de las reseñas
+        reviews = self.comment_set.all()  # Asumiendo que el modelo `Comment` tiene un FK a `CustomUser`
+        num_reviews = reviews.count()
+        average_rating = reviews.aggregate(models.Avg('rating'))['rating__avg'] or 0
+        self.score = num_reviews * average_rating
+        self.save()
+
 class Game(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to='games/', blank=True, null=True)
     unity_play_url = models.URLField(blank=True, null=True)
-    image = models.ImageField(upload_to='game_images/', blank=True, null=True)  # Nuevo campo para la imagen
+    image = models.ImageField(upload_to='game_images/', blank=True, null=True)
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
-    
+
 class Comment(models.Model):
     game = models.ForeignKey(Game, related_name='comments', on_delete=models.CASCADE)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
