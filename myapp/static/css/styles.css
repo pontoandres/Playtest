@@ -3,8 +3,6 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
 }
 
 header {
@@ -34,47 +32,6 @@ header h1 {
     text-align: center;
 }
 
-.hero, .about, .features, .offer, .join {
-    margin-bottom: 40px;
-}
-
-.btn-primary, .btn-secondary {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.levels {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.level {
-    width: 50px;
-    height: 50px;
-    background-color: #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-}
-
-.games-list {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
 footer {
     text-align: center;
     padding: 20px;
@@ -83,112 +40,60 @@ footer {
     margin-top: 40px;
 }
 
-/* Estilos para los botones de login, logout, perfil y register */
-.btn-login, .btn-register, .btn-logout {
+/* Estilos para el catálogo de juegos */
+.games-list {
+    max-width: 800px;
+    margin: 40px auto; /* Centra el contenedor */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.games-list h1 {
+    text-align: center; /* Centra el título */
+}
+
+.game-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.game-info h3 {
+    font-size: 1.5em;
+    margin: 10px 0 5px;
+}
+
+.game-info p {
+    margin: 0;
+    color: #555;
+}
+
+.btn-logout {
     display: inline-block;
     padding: 10px 20px;
     background-color: #3498db;
     color: white;
     text-decoration: none;
     border-radius: 5px;
-    font-weight: bold;
-    margin-left: 10px;
-    transition: background-color 0.3s ease;
-    border: none;
-}
-
-.btn-login:hover, .btn-register:hover, .btn-logout:hover {
-    background-color: #2980b9;
-}
-
-.button-container {
-    display: flex;
-    gap: 10px; /* Espacio horizontal entre los botones */
-}
-
-nav {
-    float: right;
-    margin-top: 10px;
-}
-
-/* Estilos para el botón desplegable */
-.dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #111010;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    padding: 12px 16px;
-}
-
-.dropdown-content form {
-    display: flex;
-    flex-direction: column;
-}
-
-.dropdown-content form label,
-.dropdown-content form input,
-.dropdown-content form button {
-    margin-bottom: 10px;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-}
-
-/* Estilos para el perfil de usuario */
-.profile-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: left;
-}
-
-.profile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
 }
 
-.user-role {
-    background-color: #3498db;
-    color: #fff;
+.btn-logout:hover {
+    background-color: #2980b9;
+}
+
+.btn-delete-game {
+    margin-top: 10px;
     padding: 5px 10px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
-.review-list {
-    margin-top: 20px;
-}
-
-.review-item {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-}
-
-.review-item:last-child {
-    border-bottom: none;
-}
+/* Eliminadas las clases que no se utilizan en el HTML */
