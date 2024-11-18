@@ -6,42 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}PlayTest{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <script src="{% static 'js/scripts.js' %}" defer></script>
 </head>
 <body>
-    <header>
-        <img src="{% static 'images/logoPlayTest.webp' %}" alt="Logo PlayTest">
-        <h1 style="margin-right: 20px;">PlayTest</h1>
-
-        <!-- Opciones de usuario: login, logout y perfil -->
-        <nav>
+    <header class="main-header">
+        <div class="logo-container">
+            <a href="{% url 'home' %}" class="logo-link">
+                <img src="{% static 'images/logoPlayTest.webp' %}" alt="Logo PlayTest" class="logo">
+                <h1>PlayTest</h1>
+            </a>
+        </div>
+    
+        <nav class="user-nav">
             {% if not user.is_authenticated %}
-                {% if request.path != '/register/' %}
-                    <!-- Botón para iniciar sesión -->
-                    <div class="dropdown">
-                        <button class="dropbtn">Iniciar Sesión</button>
-                        <div class="dropdown-content">
-                            <form method="post" action="{% url 'login' %}">
-                                {% csrf_token %}
-                                <label for="id_username">Nombre de usuario:</label>
-                                <input type="text" name="username" id="id_username" required>
-                                <label for="id_password">Contraseña:</label>
-                                <input type="password" name="password" id="id_password" required>
-                                <button type="submit">Iniciar Sesión</button>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Botón para registro -->
-                    <a href="{% url 'register' %}" class="btn-register">Regístrate</a>
-                {% endif %}
+                <a href="{% url 'login' %}" class="btn-login">Iniciar Sesión</a>
+                <a href="{% url 'register' %}" class="btn-register">Regístrate</a>
             {% else %}
-                <!-- Botón para el perfil de usuario -->
-                <a href="{% url 'user_profile' %}" class="btn-logout">Mi Perfil</a>
-                
-                <!-- Botón para cerrar sesión -->
+                <a href="{% url 'user_profile' %}" class="btn-profile">Mi Perfil</a>
                 <form method="post" action="{% url 'logout' %}" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit" class="btn-logout">Cerrar sesión</button>
+                    <button type="submit" class="btn-logout">Cerrar Sesión</button>
                 </form>
             {% endif %}
         </nav>
@@ -61,6 +44,7 @@
         {% endblock %}
     </main>
 
+    <script src="{% static 'js/scripts.js' %}" defer></script>
     <footer>
         &copy; 2024 PlayTest. Todos los derechos reservados.
     </footer>

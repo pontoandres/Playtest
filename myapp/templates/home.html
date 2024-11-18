@@ -1,31 +1,47 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}PlayTest - Home{% endblock %}
 
 {% block content %}
 <div class="container">
+    <!-- Hero Section -->
     <section class="hero">
         <h2>PlayTest</h2>
         <p>Free games. Free reviews.</p>
-        <a href="{% url 'game_list' %}" class="btn-logout">Play Now</a>
+        <p>Discover and play upcoming indie games while providing valuable feedback to developers.</p>
+        <div class="button-container">
+            <a href="{% url 'game_list' %}" class="btn btn-primary">Play Now</a>
+        </div>
     </section>
 
+    <!-- About Section -->
     <section class="about">
         <h3>Help indie developers thrive by testing their latest games.</h3>
         <p>PlayTest connects passionate gamers with indie game developers, helping games improve through your feedback.</p>
     </section>
 
+    <!-- Features Section -->
     <section class="features">
         <div class="feature">
             <h4>Simple, Fun, and Rewarding</h4>
             <p>Easily sign up, play new games, and give feedback. No hassle, just fun.</p>
-            <a href="{% url 'game_list' %}" class="btn-logout">Discover new experiences</a>
+            <!-- Marco para la imagen -->
+            <div class="image-container">
+                <img src="{% static 'images/placeholder1.png' %}" alt="Placeholder 1">
+                <img src="{% static 'images/placeholder3.png' %}" alt="Placeholder 3">
+            </div>
+            <a href="{% url 'game_list' %}" class="btn btn-secondary">Discover new experiences</a>
         </div>
     </section>
 
+    <!-- Offer Section -->
     <section class="offer">
         <h3>What We Offer</h3>
         <p>Access to a growing library of indie games in development, exclusive to PlayTest members.</p>
+        <div class="image-container">
+            <img src="{% static 'images/placeholder2.png' %}" alt="Placeholder 2">
+        </div>
         <p>Discounts, exclusive cosmetics... you just have to level up.</p>
         <div class="levels">
             <div class="level">C</div>
@@ -35,6 +51,7 @@
         </div>
     </section>
 
+    <!-- Success Section -->
     <section class="join">
         <h3>Be a Part of Indie Gaming Success</h3>
         <p>Your reviews help developers refine their games, and you get early access to exciting new titles.</p>
