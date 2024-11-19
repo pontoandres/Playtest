@@ -11,7 +11,7 @@
             <div class="game-profile text-center">
                 <h1>{{ game.title }}</h1>
                 {% if game.image %}
-                    <img src="{{ game.image.url }}" alt="{{ game.title }}" class="img-fluid game-image mb-3" style="border-radius: 8px;">
+                    <img src="{{ game.image.url }}" class="img-fluid game-image mb-3" style="border-radius: 8px;">
                 {% endif %}
                 <p class="lead">{{ game.description }}</p>
 

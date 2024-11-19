@@ -12,6 +12,15 @@ body {
   margin: 20px auto;
 }
 
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #0056b3;
+  color: white;
+}
+
+
+
 /* Hero Section */
 .hero {
   background-color: #0056b3;
