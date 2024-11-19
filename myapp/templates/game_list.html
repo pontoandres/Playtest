@@ -4,41 +4,55 @@
 {% block title %}PlayTest - Juegos Disponibles{% endblock %}
 
 {% block content %}
-    <!-- Sección de bienvenida -->
-    <section class="welcome">
-        <h2>Bienvenido al Catalogo de Juegos</h2>
-        <p>Explora los juegos en versión beta y acceso anticipado, deja tus comentarios y ayuda a los desarrolladores a mejorar sus proyectos.</p>
-    </section>
-
-    
-
-    <!-- Lista de juegos disponibles -->
-    <div class="games-list">
-        <h1>Juegos Disponibles</h1>
-        <!-- Botón para subir juegos (solo visible para desarrolladores) -->
-        {% if user.is_authenticated and user|has_group:"Developers" %}
-        <a href="{% url 'upload_game' %}" class="btn-logout">Subir Juego</a>
-        {% endif %}
-        <ul>
-            {% for game in games %}
-                <li>
-                    <a href="{% url 'game_profile' game.id %}">
-                        {% if game.image %}
-                            <img src="{{ game.image.url }}" alt="{{ game.title }}" class="game-thumbnail">
-                        {% endif %}
-                        <div class="game-info">
-                            <h3>{{ game.title }}</h3>
-                            <p>{{ game.description }}</p>
-                        </div>
-                    </a>
-                    {% if user.is_authenticated and user|has_group:"Developers" and game.uploaded_by == user %}
-                        <form action="{% url 'game_delete' game.id %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-delete-game">Eliminar Juego</button>
-                        </form>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+<div class="container">
+    <!-- Fila 1: Welcome -->
+    <div class="row">
+        <div class="col-12 welcome">
+            <h2>Bienvenido al Catálogo de Juegos</h2>
+            <p>Explora los juegos en versión beta y acceso anticipado, deja tus comentarios y ayuda a los desarrolladores a mejorar sus proyectos.</p>
+        </div>
     </div>
+
+    <!-- Fila 2: Título y Botón -->
+    <div class="row">
+        <div class="col-12">
+            <h1>Juegos Disponibles</h1>
+            {% if user.is_authenticated and user|has_group:"Developers" %}
+                <a href="{% url 'upload_game' %}" class="btn btn-secondary">Subir Juego</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Fila 3: Dos columnas -->
+    <div class="row">
+        <!-- Columna izquierda (lista juegos) -->
+        <div class="col-6">
+            <ul class="games-list">
+                {% for game in games %}
+                    <li>
+                        <a href="{% url 'game_profile' game.id %}">
+                            {% if game.image %}
+                                <img src="{{ game.image.url }}" alt="{{ game.title }}" class="game-thumbnail">
+                            {% endif %}
+                            <div class="game-info">
+                                <h3>{{ game.title }}</h3>
+                                <p>{{ game.description }}</p>
+                            </div>
+                        </a>
+                        {% if user.is_authenticated and user|has_group:"Developers" and game.uploaded_by == user %}
+                            <form action="{% url 'game_delete' game.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar Juego</button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- Columna derecha (vacia por ahora) -->
+        <div class="col-6">
+            <!-- Aquí puedes añadir contenido adicional si es necesario -->
+        </div>
+    </div>
+</div>
 {% endblock %}
