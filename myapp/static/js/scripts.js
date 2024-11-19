@@ -45,27 +45,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Modal functionality
-    // window.showGameDetails = function(gameId) {
-    //     // AJAX logic to load game details into the modal
-    //     fetch(`/game/${gameId}/`)
-    //         .then(response => response.text())
-    //         .then(data => {
-    //             document.getElementById('modal-body').innerHTML = data;
-    //             document.getElementById('gameModal').style.display = 'block';
-    //         })
-    //         .catch(error => console.error('Error loading game details:', error));
-    // }
 
-    // window.closeModal = function() {
-    //     document.getElementById('gameModal').style.display = 'none';
-    // }
+    // Nueva funcionalidad: Mostrar detalles del juego en la columna derecha
+    const gameLinks = document.querySelectorAll('.game-link');
+    const gameDetails = document.getElementById('game-details');
 
-    // Close the modal when clicking outside of it
-    // window.onclick = function(event) {
-    //     var modal = document.getElementById('gameModal');
-    //     if (event.target == modal) {
-    //         modal.style.display = 'none';
-    //     }
-    // }
+    gameLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Obtener el ID del juego desde el atributo data-game-id
+            const gameId = this.getAttribute('data-game-id');
+
+            // Llamada AJAX para obtener los detalles del juego
+            fetch(`/game/${gameId}/details/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualizar la sección de detalles con la información del juego
+                    gameDetails.innerHTML = `
+                        <img src="${data.image}" alt="${data.title}" class="img-fluid" style="border-radius: 8px; margin-bottom: 10px;">
+                        <h2>${data.title}</h2>
+                        <p>${data.description}</p>
+                        <a href="/game/${gameId}/" class="btn btn-primary mt-3">Ver Perfil Completo</a>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error al cargar los detalles del juego:', error);
+                    gameDetails.innerHTML = `<p>Hubo un error al cargar los detalles. Intenta de nuevo más tarde.</p>`;
+                });
+        });
+    });
 });

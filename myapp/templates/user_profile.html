@@ -3,27 +3,37 @@
 {% block title %}User Profile{% endblock %}
 
 {% block content %}
-<div class="profile-container">
-    <div class="profile-header">
-        <h2>{{ user_profile.username }}</h2>
-        <span class="user-role">{{ user_profile.groups.first.name }}</span>
-    </div>
-    <div class="profile-info">
-        <p><strong>Email:</strong> {{ user_profile.email }}</p>
-        <p><strong>Score:</strong> {{ user_profile.score }}</p>
+<div class="container mt-5">
+    <!-- Fila 1: Profile Header -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="profile-header text-center p-4 bg-light rounded shadow">
+                <h2>{{ user_profile.username }}</h2>
+                <span class="user-role badge bg-primary">{{ user_profile.groups.first.name }}</span>
+                <div class="profile-info mt-3">
+                    <p><strong>Email:</strong> {{ user_profile.email }}</p>
+                    <p><strong>Score:</strong> {{ user_profile.score }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <h3>Latest reviews from {{ user_profile.username }}</h3>
-    <div class="review-list">
-        {% for review in user_comments %}
-            <div class="review-item">
-                <h4>{{ review.text }}</h4>
-                <p><strong>Game:</strong> {{ review.game.title }}</p>
-                <p><small>Date: {{ review.created_at }}</small></p>
+    <!-- Fila 2: Review List -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="review-list p-4 bg-white rounded shadow">
+                <h3>Latest reviews from {{ user_profile.username }}</h3>
+                {% for review in user_comments %}
+                    <div class="review-item border-bottom pb-2 mb-3">
+                        <h4>{{ review.text }}</h4>
+                        <p><strong>Game:</strong> {{ review.game.title }}</p>
+                        <p><small>Date: {{ review.created_at }}</small></p>
+                    </div>
+                {% empty %}
+                    <p>No reviews yet.</p>
+                {% endfor %}
             </div>
-        {% empty %}
-            <p>No reviews yet.</p>
-        {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

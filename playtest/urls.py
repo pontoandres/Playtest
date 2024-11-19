@@ -20,4 +20,6 @@ urlpatterns = [
     path('game/<int:pk>/delete/', views.GameDeleteView.as_view(), name='game_delete'),
     path('game/<int:pk>/comment/', views.AddCommentView.as_view(), name='add_comment'),
     path('comment/<int:pk>/delete/', views.DeleteCommentView.as_view(), name='delete_comment'),
+    path('game/<int:game_id>/details/', views.game_details, name='game_details'),
+
 ]

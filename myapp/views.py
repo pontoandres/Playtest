@@ -166,3 +166,15 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author
+    
+def game_details(request, game_id):
+    try:
+        game = get_object_or_404(Game, id=game_id)
+        data = {
+            'title': game.title,
+            'description': game.description,
+            'image': game.image.url if game.image else '',
+        }
+        return JsonResponse(data)
+    except:
+        return JsonResponse({'error': 'Juego no encontrado'}, status=404)
